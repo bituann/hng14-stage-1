@@ -1,4 +1,10 @@
 package com.bituan.hng14_stage_1.exception;
 
-public class NotFound {
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+
+@AllArgsConstructor
+@Getter
+public class NotFound extends RuntimeException {
+    private String message;
 }
