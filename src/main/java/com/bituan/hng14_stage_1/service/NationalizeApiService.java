@@ -8,12 +8,13 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClient;
 
 @Service
-public class NationalizeService {
+public class NationalizeApiService {
     public NationalizeApiResponse classifyName (String name) {
         RestClient restClient = RestClient.create();
 
         ResponseEntity<NationalizeApiResponse> response = restClient
                 .get()
+                .uri("https://api.nationalize.io/?name=" + name)
                 .retrieve()
                 .onStatus(HttpStatusCode::isError, (req, res) -> {
                     throw new ExternalApiException(502, "Nationalize returned an invalid response");
