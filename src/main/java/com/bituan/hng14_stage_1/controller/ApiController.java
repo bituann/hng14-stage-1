@@ -1,6 +1,7 @@
 package com.bituan.hng14_stage_1.controller;
 
 import com.bituan.hng14_stage_1.enums.AgeGroup;
+import com.bituan.hng14_stage_1.exception.BadRequest;
 import com.bituan.hng14_stage_1.exception.NotFound;
 import com.bituan.hng14_stage_1.model.*;
 import com.bituan.hng14_stage_1.repository.ApiRepository;
@@ -32,6 +33,11 @@ public class ApiController {
     @PostMapping("/profiles")
     public ResponseEntity<ApiResponse> classifyName (@RequestBody ProfilesPostApiRequest request) {
         String name = request.getName();
+
+        if (name == null || name.isBlank()) {
+            throw new BadRequest("Missing or empty name");
+        }
+
         if (apiRepository.existsByName(name)) {
             ApiResult result = apiRepository.findByName(name).orElseThrow(() -> new NotFound("Profile not found"));
 
@@ -77,7 +83,7 @@ public class ApiController {
         }
 
         if (ageGroup != null && !ageGroup.isBlank()) {
-            profileList = profileList.stream().filter((a) -> a.getAgeGroup() == AgeGroup.valueOf(ageGroup)).toList();
+            profileList = profileList.stream().filter((a) -> a.getAgeGroup() == AgeGroup.valueOf(ageGroup.toLowerCase())).toList();
         }
 
         AllProfilesApiResponse response = new AllProfilesApiResponse("success", profileList.size(), profileList);
