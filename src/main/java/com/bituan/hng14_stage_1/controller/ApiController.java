@@ -19,7 +19,8 @@ import java.util.List;
 import java.util.UUID;
 
 @RequiredArgsConstructor
-@RestController("/api")
+@RestController
+@RequestMapping("/api")
 public class ApiController {
     final AgifyApiService agifyApiService;
     final GenderizeApiService genderizeApiService;
