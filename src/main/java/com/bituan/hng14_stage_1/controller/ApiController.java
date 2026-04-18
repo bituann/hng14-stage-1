@@ -19,6 +19,7 @@ import java.util.List;
 import java.util.UUID;
 
 @RequiredArgsConstructor
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/api")
 public class ApiController {
